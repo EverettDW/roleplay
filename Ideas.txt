@@ -1,0 +1,18 @@
+<- Text Based Version ->
+
+1.  Implement some basic use of keyboard to navigate title screen
+    and maybe even actions in the future *
+
+2.
+
+
+
+<- Graphic Version ->
+
+1.  Make scrolling title screen that changes background pic and
+    title screen for each roleplay ( And easter eggs ) *
+
+2.  Uniphix somewhere ( Phix on light blue fire with glow,
+                        Uni with dark words on pastel rainbow letters )
+
+3.
