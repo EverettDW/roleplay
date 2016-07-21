@@ -3,19 +3,16 @@ from time import sleep
 import sys
 from os import system
 from msvcrt import getch
+import c1
 
 
 
 # Variables
+useless_var = ''
 user_is_evs = False
 user_is_grey = False
 is_dark = True
 usr_chap = 0
-
-player = {'name':'',\
-'inv_size':5,\
-'inv':[],\
-}
 
 actions = ['lights',\
 'exit',\
@@ -24,7 +21,10 @@ actions = ['lights',\
 'go back',\
 'go forward',\
 'pick up',\
-'drop']
+'drop',\
+'eat',\
+'drink',\
+]
 
 chap_map = [['SP - Entrance',\
 'SP - Entry Hallway',\
@@ -34,22 +34,6 @@ chap_map = [['SP - Entrance',\
 'SP - Evs\' Room',\
 'SP - Adi\'s Room'],\
 ['',''],['',''],['','']]
-
-chap_dial = {'SP - Entrance':"""     You walk through the door to the Savage Palace
-     entrance.  The lights are off and you can see nothing
-     but a faint glow straight ahead of you leading into
-     a hallway.  There could be other things in the room
-     but the lights are off.""",\
-'SP - Entry Hallway':"""     PUT DESC HERE     """,\
-}
-
-chap_items = {'SP - Entrance':[],\
-'SP - Entry Hallway':[],\
-}
-
-chap_dirs = {'SP - Entrance':['go left','go forward'],
-'SP - Entry Hallway':[],\
-}
 
 chapters = {}
 chapters['exit'] = 'exit'
@@ -69,9 +53,11 @@ def lights():
     return None
 
 def help():
+    system('cls')
     print
     print
-    print '     YAY HELP WORKS!'
+    print
+
     sleep(.5)
     return None
 
@@ -91,9 +77,9 @@ def chap_one(user_is):
         print
         if is_dark == True:
             # If the room is dark
-            for key in chap_dial.keys():
+            for key in c1.chap_dial.keys():
                 if cur_place == key:
-                    print chap_dial[key]
+                    print c1.chap_dial[key]
             print
             print
             usr_action = str(raw_input('     Action: ')).lower()
