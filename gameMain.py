@@ -67,10 +67,15 @@ def help():
 def chap_one(user_is):
     system('cls')
     usr_replay = True
-    cur_place = chap_map[0][0]
+    if user_is == True:
+        cur_place = chap_map[0][0]
+        c1.player['name'] = 'Evs'
+    else:
+        cur_place = chap_map[0][4]
+        c1.player['name'] = 'Adi'
     last_place = cur_place
     while usr_replay == True:
-        system('title ' + cur_place)
+        system('title ' + c1.player['name'] + ' : ' + cur_place)
         system('cls')
         print
         print

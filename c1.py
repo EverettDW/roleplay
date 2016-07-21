@@ -30,7 +30,7 @@ chap_dial = {'SP - Entrance':"""     You walk through the door to the Savage Pal
 'SP - Entry Hallway':"""     PUT DESC HERE     """,\
 'SP - Cinema Room':"""     PUT DESC HERE     """,\
 'SP - Peanut Butter Fountain':"""     PUT DESC HERE     """,\
-'SP - Park':"""     PUT DESC HERE     """,\
+'SP - Park':"""     Adi's starting spot: WRITE DESC     """,\
 'SP - Evs\' Room':"""     PUT DESC HERE     """,\
 'SP - Adi\'s Room':"""     PUT DESC HERE     """,\
 }
