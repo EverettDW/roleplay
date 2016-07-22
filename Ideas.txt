@@ -1,8 +1,14 @@
 <- Text Based Version ->
 1.  Implement some basic use of keyboard to navigate title screen
-    and maybe even actions in the future *
+    and maybe even actions in the future * ( 1/2 way done )
 
-2.
+2.  Implement choice system with room objects and the player object
+
+3.  Implement gold and item values for selling, buying, economy, etc
+
+4.  Implement hidden options for an easier playthrough of the game
+
+5.
 
 
 <- Graphic Version ->
