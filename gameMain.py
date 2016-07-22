@@ -37,12 +37,139 @@ chap_map = [['SP - Entrance',\
 'SP - Adi\'s Room'],\
 ['',''],['',''],['','']]
 
+c1_cur_place = chap_map[0][0]
+c1_last_place = c1_cur_place
+c1_inf_evs = c1.chap_info_evs
+c1_info_evs = {}
+
 chapters = {}
 chapters['exit'] = 'exit'
 chapters[1] = 'savage_palace'
 chapters[2] = 'zombie_apocalypse'
 chapters[3] = 'grey_and_nevaeh'
 chapters[4] = 'spirit_animals'
+
+
+
+# Action functions
+def go_l(map_inf):
+    for inf_node in map_inf:
+        if inf_node == 'dirs':
+            for di in map_inf[inf_node].keys():
+                if di == 'go left':
+                    return map_inf[inf_node][di]
+            print
+            print
+            print '     Cannot go left here.'
+            sleep(1)
+            return '' 
+                
+def go_r(map_inf):
+    for inf_node in map_inf:
+        if inf_node == 'dirs':
+            for di in map_inf[inf_node].keys():
+                if di == 'go right':
+                    return map_inf[inf_node][di]
+            print
+            print
+            print '     Cannot go right here.'
+            sleep(1)
+            return ''
+                
+def go_f(map_inf):
+    for inf_node in map_inf:
+        if inf_node == 'dirs':
+            for di in map_inf[inf_node].keys():
+                if di == 'go forward':
+                    return map_inf[inf_node][di]
+            print
+            print
+            print '     Cannot go forward here.'
+            sleep(1)
+            return ''
+                
+def go_b(map_inf):
+    for inf_node in map_inf:
+        if inf_node == 'dirs':
+            for di in map_inf[inf_node].keys():
+                if di == 'go back':
+                    return map_inf[inf_node][di]
+            print
+            print
+            print '     Cannot go back here.'
+            sleep(1)
+            return ''
+        
+def talk(map_inf):
+    start_with_char = False
+    char_dial = {'who':'',
+                 'dial':[]}
+    else_dial = {'who':'',
+                 'dial':[]}
+    dial_total = []
+    char_dial['who'] = c1.player['name']
+    for inf_node in map_inf:
+        if inf_node == 'dial':
+            for di in map_inf[inf_node].keys():
+                if di == char_dial['who']:
+                    char_dial['dial'].append(map_inf[inf_node][di])
+                else:
+                    else_dial['who'] = di
+                    else_dial['dial'].append(map_inf[inf_node][di])
+                dial_total.append(map_inf[inf_node][di])
+    if char_dial['dial'][0][0] == '`':
+        start_with_char = True
+    else:
+        pass
+    if start_with_char:
+        system('cls')
+        system('title ' + c1.player['name'] + ' : ' + 'Dialogue - ' + else_dial['who'])
+        print
+        print
+        print
+        for line in len(dial_total):
+            
+
+
+
+# Function to check actions
+def check_action(u_act):
+    global c1_cur_place
+    global c1_last_place
+    global c1_info_evs
+    c1_last_place = c1_cur_place
+    if u_act == 'go left':
+        c1_cur_place = go_l(c1_info_evs)
+        if c1_cur_place == '':
+            c1_cur_place = c1_last_place
+    elif u_act =='go right':
+        c1_cur_place = go_r(c1_info_evs)
+        if c1_cur_place == '':
+            c1_cur_place = c1_last_place
+    elif u_act == 'go forward':
+        c1_cur_place = go_f(c1_info_evs)
+        if c1_cur_place == '':
+            c1_cur_place = c1_last_place
+    elif u_act == 'go back':
+        c1_cur_place = go_b(c1_info_evs)
+        if c1_cur_place == '':
+            c1_cur_place = c1_last_place
+    elif u_act == 'go sec':
+        print
+        print
+        usr_room_ch = str(raw_input('     Which room: '))
+        for r in chap_map[0]:
+            if usr_room_ch == r:
+                c1_cur_place = usr_room_ch
+    elif u_act == 'exit':
+        sys.exit(0)
+    else:
+        print
+        print
+        print '     Invalid!'
+        sleep(1)
+    c1_info_evs = c1_inf_evs[c1_cur_place]
+    return None
 
 
 
@@ -54,13 +181,13 @@ def loading():
     print
     print
     print '     Loading',
-    sleep(.3)
+    sleep(.2)
     print '.',
-    sleep(.3)
+    sleep(.2)
     print '.',
-    sleep(.3)
+    sleep(.2)
     print '.',
-    sleep(.3)
+    sleep(.2)
     print ' Done :)'
     sleep(.5)
     return None
@@ -160,28 +287,29 @@ def help():
 # Chapter One
 def chap_one(user):
     system('cls')
+    global c1_cur_place
+    global c1_last_place
+    global c1_info_evs
     if user == 'evs':
-        cur_place = chap_map[0][0]
+        c1_cur_place = chap_map[0][0]
+        c1_info_evs = c1_inf_evs[c1_cur_place]
         c1.player['name'] = 'Evs'
     else:
-        cur_place = chap_map[0][4]
+        c1_cur_place = chap_map[0][4]
+        c1_info_evs = c1_inf_evs[c1_cur_place]
         c1.player['name'] = 'Adi'
-    last_place = cur_place
+    c1_last_place = c1_cur_place
     while True:
-        chap_inf = c1.chap_info[cur_place]
-        system('title ' + c1.player['name'] + ' : ' + cur_place)
+        system('title ' + c1.player['name'] + ' : ' + c1_cur_place)
         system('cls')
         print
         print
         print
-        print chap_inf['desc']
+        print c1_info['desc']
         print
         print
         usr_action = str(raw_input('     Action: ')).lower()
-        if usr_action == 'exit':
-            return None
-        elif usr_action == 'go left':
-            pass
+        check_action(usr_action)
     return None
 
 
