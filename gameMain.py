@@ -4,13 +4,11 @@ import sys
 from os import system
 from msvcrt import getch
 import c1
+import assets
 
 
 
 # Variables
-useless_var = ''
-user_is_evs = False
-user_is_grey = False
 is_dark = True
 usr_chap = 0
 
@@ -28,9 +26,13 @@ actions = ['lights',\
 
 chap_map = [['SP - Entrance',\
 'SP - Entry Hallway',\
-'SP - Cinema Room',\
 'SP - Peanut Butter Fountain',\
 'SP - Park',\
+'SP - Park 1',\
+'SP - Park 2',\
+'SP - Park 3',\
+'SP - Park 4',\
+'SP - Park 5',\
 'SP - Evs\' Room',\
 'SP - Adi\'s Room'],\
 ['',''],['',''],['','']]
@@ -41,6 +43,98 @@ chapters[1] = 'savage_palace'
 chapters[2] = 'zombie_apocalypse'
 chapters[3] = 'grey_and_nevaeh'
 chapters[4] = 'spirit_animals'
+
+
+
+# Function to simulate loading
+def loading():
+    system('title Loading...')
+    system('cls')
+    print
+    print
+    print
+    print '     Loading',
+    sleep(.3)
+    print '.',
+    sleep(.3)
+    print '.',
+    sleep(.3)
+    print '.',
+    sleep(.3)
+    print ' Done :)'
+    sleep(.5)
+    return None
+
+
+
+# The actual function that will go in the loop to use the title screen
+# Right key: 224-77 | Left key: 224-75 | Up key: 224-72 | Down key: 224-80
+def nav_title_screen():
+    print_title_screen(0)
+    usr_select_title = 0
+    enter_not_pressed = True
+    while enter_not_pressed:
+        print_title_screen(usr_select_title)
+        key = ord(getch())
+        if key == 224:
+            key = ord(getch())
+            if key == 72:
+                if usr_select_title == 0:
+                    system('cls')
+                    print_title_screen(usr_select_title)
+                else:
+                    usr_select_title -= 1
+                    system('cls')
+                    print_title_screen(usr_select_title)
+            elif key == 80:
+                if usr_select_title == 3:
+                    system('cls')
+                    print_title_screen(usr_select_title)
+                else:
+                    usr_select_title += 1
+                    system('cls')
+                    print_title_screen(usr_select_title)
+        elif key == 13:
+            enter_not_pressed = False
+            loading()
+            if usr_select_title == 0:
+                usr_chosen_name = assets.chr_choose(chapters[1])
+                chap_one(usr_chosen_name)
+            elif usr_select_title == 1:
+                usr_chosen_name = assets.chr_choose(chapters[2])
+                chap_two(usr_chosen_name)
+            elif usr_select_title == 2:
+                usr_chosen_name = assets.chr_choose(chapters[3])
+                chap_three(usr_chosen_name)
+            elif usr_select_title == 3:
+                usr_chosen_name = assets.chr_choose(chapters[4])
+                chap_four(usr_chosen_name)
+            
+# Display title screen function
+def print_title_screen(sel):
+    system('cls')
+    system('title Roleplay')
+    print
+    print
+    print
+    edit_title = assets.title_screen
+    if sel == 0:
+        print assets.title_screen
+    elif sel == 1:
+        edit_title = edit_title.replace('>', ' ')
+        edit_title = edit_title[:278] + '>' + edit_title[279:]
+        print edit_title
+    elif sel == 2:
+        edit_title = edit_title.replace('>', ' ')
+        edit_title = edit_title[:321] + '>' + edit_title[322:]
+        print edit_title
+    elif sel == 3:
+        edit_title = edit_title.replace('>', ' ')
+        edit_title = edit_title[:362] + '>' + edit_title[363:]
+        print edit_title
+    print
+    print '     ',
+    return None
 
 
 
@@ -64,53 +158,50 @@ def help():
 
 
 # Chapter One
-def chap_one(user_is):
+def chap_one(user):
     system('cls')
-    usr_replay = True
-    if user_is == True:
+    if user == 'evs':
         cur_place = chap_map[0][0]
         c1.player['name'] = 'Evs'
     else:
         cur_place = chap_map[0][4]
         c1.player['name'] = 'Adi'
     last_place = cur_place
-    while usr_replay == True:
+    while True:
+        chap_inf = c1.chap_info[cur_place]
         system('title ' + c1.player['name'] + ' : ' + cur_place)
         system('cls')
         print
         print
         print
-        if is_dark == True:
-            # If the room is dark
-            for key in c1.chap_dial.keys():
-                if cur_place == key:
-                    print c1.chap_dial[key]
-            print
-            print
-            usr_action = str(raw_input('     Action: ')).lower()
-
-        else:
+        print chap_inf['desc']
+        print
+        print
+        usr_action = str(raw_input('     Action: ')).lower()
+        if usr_action == 'exit':
+            return None
+        elif usr_action == 'go left':
             pass
     return None
 
 
 
 # Chapter Twp
-def chap_two(user_is_evs):
+def chap_two(user):
     pass
     return None
 
 
 
 # Chapter Three
-def chap_three(user_is_grey):
+def chap_three(user):
     pass
     return None
 
 
 
 # Chapter Four
-def chap_four(user_is_evs):
+def chap_four(user):
     pass
     return None
 
@@ -119,73 +210,8 @@ def chap_four(user_is_evs):
 # Main Start
 def main():
     while 1 == 1:
-        system('cls')
-        system('title Roleplay')
-        prop_char = False
-        who_user_is = 'user'
-        print
-        print
-        print
-        print '     ------------------------------------------------     '
-        print
-        print '                         Roleplay                         '
-        print
-        print '     ------------------------------------------------     '
-        print
-        print
-        print '     1 = Chapter One    -  Savage Palace     '
-        print '     2 = Chapter Two    -  Zombie Apocalypse '
-        print '     3 = Chapter Three  -  Grey And Nevaeh   '
-        print '     4 = Chapter Four   -  Spirit Animals    '
-        # Add extra chapters here - Make sure to add to the chapters dict
-        print
-        print
-
-        usr_chap = raw_input('     Which chapter do you wish to visit: ')
-
-        try:
-            usr_chap = int(usr_chap)
-        except:
-            usr_chap = str(usr_chap).lower()
-
-        for key in chapters.keys():
-            if usr_chap == key:
-                prop_char = True
-
-        if prop_char == True:
-            if usr_chap == 1:
-                system('cls')
-                print
-                print
-                print
-                if who_user_is == 'user':
-                    who_user_want = str(raw_input('     Do you want to be \'Evs\' or \'Adi\': '))
-                    who_user_want = who_user_want.lower()
-                    if who_user_want == 'evs':
-                        user_is_evs = True
-                        chap_one(user_is_evs)
-                    elif who_user_want == 'adi':
-                        user_is_evs = False
-                        chap_one(user_is_evs)
-                    else:
-                        print
-                        print '     Invalid Entry'
-                        sleep(.5)
-            elif usr_chap == 2:
-                pass
-            elif usr_chap == 3:
-                pass
-            elif usr_chap == 4:
-                pass
-            elif usr_chap == 'exit':
-                print
-                print
-                exit()
-        else:
-            print
-            print
-            print '     Invalid Entry'
-            sleep(.5)
+        nav_title_screen()
+        break
     return None
 
 
